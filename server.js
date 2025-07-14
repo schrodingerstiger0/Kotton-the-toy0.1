@@ -24,7 +24,7 @@ app.post("/process", upload.single("audio"), async (req, res) => {
       formData,
       {
         headers: {
-          Authorization: `Bearer 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`,
+          Authorization: `Bearer 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`,
           ...formData.getHeaders()
         }
       }
