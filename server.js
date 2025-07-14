@@ -14,6 +14,12 @@ app.post("/process", upload.single("audio"), async (req, res) => {
   try {
     const filePath = req.file.path;
 
+    // Check if OpenAI key exists
+    const OPENAI_KEY = process.env.TESTICLE_OPENAI;
+    if (!OPENAI_KEY) {
+      throw new Error("❌ Missing TESTICLE_OPENAI environment variable.");
+    }
+
     // 1. TRANSCRIBE AUDIO USING WHISPER
     const formData = new FormData();
     formData.append("file", fs.createReadStream(filePath));
@@ -24,7 +30,7 @@ app.post("/process", upload.single("audio"), async (req, res) => {
       formData,
       {
         headers: {
-          Authorization: `Bearer ${TESTICLE_OPENAI}`,
+          Authorization: `Bearer ${OPENAI_KEY}`,
           ...formData.getHeaders()
         }
       }
@@ -51,7 +57,7 @@ app.post("/process", upload.single("audio"), async (req, res) => {
       },
       {
         headers: {
-          Authorization: `Bearer YOUR_OPENAI_API_KEY`,
+          Authorization: `Bearer ${OPENAI_KEY}`,
           "Content-Type": "application/json"
         }
       }
@@ -70,7 +76,7 @@ app.post("/process", upload.single("audio"), async (req, res) => {
       },
       {
         headers: {
-          Authorization: `Bearer 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`,
+          Authorization: `Bearer ${OPENAI_KEY}`,
           "Content-Type": "application/json"
         },
         responseType: "arraybuffer"
@@ -84,11 +90,12 @@ app.post("/process", upload.single("audio"), async (req, res) => {
     });
     res.send(ttsRes.data);
 
-    // Clean up
+    // Clean up the uploaded file
     fs.unlinkSync(filePath);
+
   } catch (err) {
-    console.error(err);
-    res.status(500).send("Something went wrong");
+    console.error("❌ ERROR:", err.message || err);
+    res.status(500).send("Something went wrong.");
   }
 });
 
