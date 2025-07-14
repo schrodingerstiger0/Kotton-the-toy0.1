@@ -70,7 +70,7 @@ app.post("/process", upload.single("audio"), async (req, res) => {
       },
       {
         headers: {
-          Authorization: `Bearer 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`,
+          Authorization: `Bearer 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`,
           "Content-Type": "application/json"
         },
         responseType: "arraybuffer"
