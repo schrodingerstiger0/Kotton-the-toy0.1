@@ -70,7 +70,7 @@ app.post("/process", upload.single("audio"), async (req, res) => {
       },
       {
         headers: {
-          Authorization: `Bearer YOUR_OPENAI_API_KEY`,
+          Authorization: `Bearer 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`,
           "Content-Type": "application/json"
         },
         responseType: "arraybuffer"
