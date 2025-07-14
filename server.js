@@ -24,7 +24,7 @@ app.post("/process", upload.single("audio"), async (req, res) => {
       formData,
       {
         headers: {
-          Authorization: `Bearer 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`,
+          Authorization: `Bearer ${TESTICLE_OPENAI}`,
           ...formData.getHeaders()
         }
       }
